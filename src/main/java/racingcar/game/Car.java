@@ -1,6 +1,7 @@
 package racingcar.game;
 
 import racingcar.Validatable;
+import racingcar.Validator;
 
 /**
  * 자동차 객체
@@ -11,6 +12,7 @@ public class Car implements Validatable {
 	public Car(String name, int moveCount) {
 		this.name = name;
 		this.moveCount = moveCount;
+		Validator.throwIfNotValid(this, ExceptionStatus.INVALID_CAR);
 	}
 
 	public void move() {

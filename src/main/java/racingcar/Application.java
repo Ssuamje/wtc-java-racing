@@ -36,7 +36,6 @@ public class Application {
         final int tryCount = adaptInputAsInt(Console.readLine());
 
         RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
-        Validator.throwIfNotValid(racingGame, ExceptionStatus.INVALID_RACING_GAME);
         racingGame.runGame();
     }
 

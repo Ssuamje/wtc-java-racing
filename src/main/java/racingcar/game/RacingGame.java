@@ -25,6 +25,7 @@ public class RacingGame implements Validatable {
 		this.minNum = minNum;
 		this.thresholdToMove = thresholdToMove;
 		this.maxNum = maxNum;
+		Validator.throwIfNotValid(this, ExceptionStatus.INVALID_RACING_GAME);
 	}
 
 	/**
@@ -52,9 +53,6 @@ public class RacingGame implements Validatable {
 		List<Car> cars = this.carNames.stream()
 				.map(name -> new Car(name, DEFAULT_POSITION))
 				.toList();
-		cars.forEach(car -> {
-			Validator.throwIfNotValid(car, ExceptionStatus.INVALID_CAR);
-		});
 
 		for (int i = 0; i < tryCount; i++) {
 			cars.forEach(car -> {
