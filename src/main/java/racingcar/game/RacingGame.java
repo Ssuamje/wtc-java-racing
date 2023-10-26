@@ -86,7 +86,7 @@ public class RacingGame implements Validatable {
 	}
 
 	private List<Car> createCarsByNames(List<String> carNames, int defaultPosition) {
-		return this.carNames.stream()
+		return carNames.stream()
 			.map(name -> new Car(name, defaultPosition))
 			.toList();
 	}
