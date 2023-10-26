@@ -60,6 +60,9 @@ public class RacingGame implements Validatable {
 	/**
 	 * Car 객체로 만들어서 오류가 나는지 안 나는지는 해당 게임의 실행 시에 결정된다고 생각했다.
 	 * 따라서 Car 객체를 만드는 부분은 게임을 실행하는 메소드 내부로 넣었다.
+	 *
+	 * 경우에 따라서 내부적으로 this의 변수를 참조하는 부분을 매개변수로 통제할 수 있겠지만,
+	 * 조금 과한 것 같아서 그냥 사용했다.
 	 */
 	public void runGame() {
 		List<Car> cars = this.carNames.stream()
@@ -68,7 +71,7 @@ public class RacingGame implements Validatable {
 
 		for (int i = 0; i < tryCount; i++) {
 			cars.forEach(car -> {
-				int randomNum = Randoms.pickNumberInRange(minNum, maxNum);
+				int randomNum = Randoms.pickNumberInRange(this.minNum, this.maxNum);
 				if (isGreaterThanThresholdToMove(randomNum)) {
 					car.move();
 				}
@@ -89,6 +92,9 @@ public class RacingGame implements Validatable {
 		System.out.println();
 	}
 
+	/**
+	 * 메서드가 하는 일이 꽤 많지만 재사용되거나 외부에서 사용되는 부분은 아니므로 굳이 분리하지는 않았다.
+	 */
 	private void printWinner(List<Car> cars) {
 		int maxMoveCount = cars.stream()
 				.mapToInt(Car::getMoveCount)
