@@ -66,11 +66,12 @@ public class RacingGame implements Validatable {
 	 *
 	 * 움직일지 말지에 대한 부분을 별도의 클래스로 작성할 수는 있으나,
 	 * 불필요하다고 생각해서 분리하지 않았다.
+	 *
+	 * forEach를 통해 해당 원소들에 side-effect가 발생하지만,
+	 * 예외가 되는 상황이 존재하지 않으므로 forEach를 이용했고, 굳이 깊은 복사를 통한 처리는 하지 않았다.
 	 */
 	public void runGame() {
-		List<Car> cars = this.carNames.stream()
-				.map(name -> new Car(name, DEFAULT_POSITION))
-				.toList();
+		List<Car> cars = createCarsByNames(this.carNames, DEFAULT_POSITION);
 
 		for (int i = 0; i < tryCount; i++) {
 			cars.forEach(car -> {
@@ -82,6 +83,12 @@ public class RacingGame implements Validatable {
 			printMoveResult(cars);
 		}
 		printWinner(cars);
+	}
+
+	private List<Car> createCarsByNames(List<String> carNames, int defaultPosition) {
+		return this.carNames.stream()
+			.map(name -> new Car(name, defaultPosition))
+			.toList();
 	}
 
 	private void printMoveResult(List<Car> cars) {
