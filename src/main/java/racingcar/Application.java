@@ -21,11 +21,11 @@ public class Application {
      */
     public static void main(String[] args) {
         System.out.println(FIRST_INPUT_MESSAGE);
-        final List<String> carNames = adaptInputAsStringList(Console.readLine());
+        List<String> carNames = adaptInputAsStringList(Console.readLine());
         System.out.println(SECOND_INPUT_MESSAGE);
-        final int tryCount = adaptInputAsInt(Console.readLine());
+        int tryCount = adaptInputAsInt(Console.readLine());
 
-        final RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
+        RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
         racingGame.runGame();
     }
 
