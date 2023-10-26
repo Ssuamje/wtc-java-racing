@@ -38,6 +38,8 @@ public class Application {
             return Integer.parseInt(numericString);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("숫자를 입력해주세요.");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("알 수 없는 오류가 발생했습니다.");
         }
     }
 }
