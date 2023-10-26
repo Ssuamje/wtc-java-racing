@@ -5,6 +5,7 @@ import racingcar.Validatable;
 import racingcar.Validator;
 
 import java.util.List;
+import java.util.OptionalInt;
 
 /**
  * 게임 객체
@@ -98,18 +99,22 @@ public class RacingGame implements Validatable {
 		System.out.println();
 	}
 
-	/**
-	 * 메서드가 하는 일이 꽤 많지만 재사용되거나 외부에서 사용되는 부분은 아니므로 굳이 분리하지는 않았다.
-	 */
 	private void printWinner(List<Car> cars) {
-		int maxMoveCount = cars.stream()
+		int maxMoveCount = getMaxMoveCount(cars).orElse(0);
+		List<String> winners = getWinnersByMaxMoveCount(cars, maxMoveCount);
+		System.out.println("최종 우승자 : " + String.join(", ", winners));
+	}
+
+	private OptionalInt getMaxMoveCount(List<Car> cars) {
+		return cars.stream()
 				.mapToInt(Car::getMoveCount)
-				.max()
-				.orElse(0);
-		List<String> winners = cars.stream()
+				.max();
+	}
+
+	private List<String> getWinnersByMaxMoveCount(List<Car> cars, int maxMoveCount) {
+		return cars.stream()
 				.filter(car -> car.getMoveCount() == maxMoveCount)
 				.map(Car::getName)
 				.toList();
-		System.out.println("최종 우승자 : " + String.join(", ", winners));
 	}
 }
