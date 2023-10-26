@@ -10,6 +10,7 @@ import java.util.List;
  * 게임 객체
  */
 public class RacingGame implements Validatable {
+	private static final int DEFAULT_POSITION = 0;
 
 	private final List<String> carNames;
 	private final int tryCount;
@@ -17,7 +18,6 @@ public class RacingGame implements Validatable {
 	private final int thresholdToMove;
 	private final int maxNum;
 
-	private static final int DEFAULT_POSITION = 0;
 
 	/**
 	 * 외부에서 주어지는 상수 값 또한 해당 게임에서 사용되는 경계값이므로 생성자에 포함하였다.
