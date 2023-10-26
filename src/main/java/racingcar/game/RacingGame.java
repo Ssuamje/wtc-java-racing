@@ -19,6 +19,9 @@ public class RacingGame implements Validatable {
 
 	private static final int DEFAULT_POSITION = 0;
 
+	/**
+	 * 외부에서 주어지는 상수 값 또한 해당 게임에서 사용되는 경계값이므로 생성자에 포함하였다.
+	 */
 	public RacingGame(List<String> carNames, int tryCount, int minNum, int thresholdToMove, int maxNum) {
 		this.carNames = carNames;
 		this.tryCount = tryCount;
@@ -38,6 +41,11 @@ public class RacingGame implements Validatable {
 		return !this.carNames.isEmpty()
 			&&  this.tryCount > 0;
 	}
+
+	/**
+	 * throw시에 사용되는 ToString의 경우 사용자에게 노출되지 않고,
+	 * 프로그래머가 확인하는 부분이므로 상수 또한 포함시켰다.
+	 */
 	@Override
 	public String toString() {
 		return "RacingGame{" +
@@ -49,6 +57,10 @@ public class RacingGame implements Validatable {
 			'}';
 	}
 
+	/**
+	 * Car 객체로 만들어서 오류가 나는지 안 나는지는 해당 게임의 실행 시에 결정된다고 생각했다.
+	 * 따라서 Car 객체를 만드는 부분은 게임을 실행하는 메소드 내부로 넣었다.
+	 */
 	public void runGame() {
 		List<Car> cars = this.carNames.stream()
 				.map(name -> new Car(name, DEFAULT_POSITION))
@@ -74,6 +86,7 @@ public class RacingGame implements Validatable {
 		for (Car car : cars) {
 			System.out.println(car.getName() + " : " + "-".repeat(car.getMoveCount()));
 		}
+		System.out.println();
 	}
 
 	private void printWinner(List<Car> cars) {
