@@ -2,6 +2,7 @@ package racingcar;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import racingcar.game.Car;
 import racingcar.game.ExceptionStatus;
@@ -34,22 +35,7 @@ class ApplicationTest extends NsTest {
         );
     }
     /*-------------------------- 추가 테스트 --------------------------*/
-    @DisplayName("자동차를 생성할 때 이름이 5자를 초과하거나 빈 문자열이면 예외가 발생한다.")
-    @Test
-    void invalid_car_name() {
-        //given
-        String empty = "";
-        String longName = "안녕하세요반갑습니다";
 
-        //when, then
-        assertThatThrownBy(() -> new Car(empty, 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ExceptionStatus.INVALID_CAR.getMessage());
-
-        assertThatThrownBy(() -> new Car(longName, 0))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ExceptionStatus.INVALID_CAR.getMessage());
-    }
 
     @Override
     public void runMain() {

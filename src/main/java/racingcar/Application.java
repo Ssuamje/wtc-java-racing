@@ -25,7 +25,7 @@ public class Application {
         System.out.println(SECOND_INPUT_MESSAGE);
         final int tryCount = adaptInputAsInt(Console.readLine());
 
-        RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
+        final RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
         racingGame.runGame();
     }
 
