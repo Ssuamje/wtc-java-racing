@@ -75,17 +75,13 @@ public class RacingGame implements Validatable {
 		for (int i = 0; i < tryCount; i++) {
 			cars.forEach(car -> {
 				int randomNum = Randoms.pickNumberInRange(this.minNum, this.maxNum);
-				if (isGreaterThanThresholdToMove(randomNum)) {
+				if (randomNum >= thresholdToMove) {
 					car.move();
 				}
 			});
 			printMoveResult(cars);
 		}
 		printWinner(cars);
-	}
-
-	private boolean isGreaterThanThresholdToMove(int num) {
-		return num >= thresholdToMove;
 	}
 
 	private void printMoveResult(List<Car> cars) {
