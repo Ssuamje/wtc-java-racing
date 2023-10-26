@@ -63,6 +63,9 @@ public class RacingGame implements Validatable {
 	 *
 	 * 경우에 따라서 내부적으로 this의 변수를 참조하는 부분을 매개변수로 통제할 수 있겠지만,
 	 * 조금 과한 것 같아서 그냥 사용했다.
+	 *
+	 * 움직일지 말지에 대한 부분을 별도의 클래스로 작성할 수는 있으나,
+	 * 불필요하다고 생각해서 분리하지 않았다.
 	 */
 	public void runGame() {
 		List<Car> cars = this.carNames.stream()
