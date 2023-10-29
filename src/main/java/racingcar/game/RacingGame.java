@@ -13,8 +13,7 @@ import java.util.OptionalInt;
 public class RacingGame implements Validatable {
 	private static final int DEFAULT_POSITION = 0;
 
-	private final List<String> carNames;
-	private final int tryCount;
+	private final RacingGameConfig config;
 	private final int minNum;
 	private final int thresholdToMove;
 	private final int maxNum;
@@ -23,9 +22,8 @@ public class RacingGame implements Validatable {
 	/**
 	 * 외부에서 주어지는 상수 값 또한 해당 게임에서 사용되는 경계값이므로 생성자에 포함하였다.
 	 */
-	public RacingGame(List<String> carNames, int tryCount, int minNum, int thresholdToMove, int maxNum) {
-		this.carNames = carNames;
-		this.tryCount = tryCount;
+	public RacingGame(RacingGameConfig config, int minNum, int thresholdToMove, int maxNum) {
+		this.config = config;
 		this.minNum = minNum;
 		this.thresholdToMove = thresholdToMove;
 		this.maxNum = maxNum;
@@ -39,8 +37,7 @@ public class RacingGame implements Validatable {
 	 */
 	@Override
 	public boolean isValid() {
-		return !this.carNames.isEmpty()
-			&&  this.tryCount > 0;
+		return this.config.isValid();
 	}
 
 	/**
@@ -50,8 +47,8 @@ public class RacingGame implements Validatable {
 	@Override
 	public String toString() {
 		return "RacingGame{" +
-			"carNames=" + carNames +
-			", tryCount=" + tryCount +
+			"carNames=" + this.config.getCarNames() +
+			", tryCount=" + this.config.getTryCount() +
 			", minNum=" + minNum +
 			", thresholdToMove=" + thresholdToMove +
 			", maxNum=" + maxNum +
@@ -72,7 +69,7 @@ public class RacingGame implements Validatable {
 	 * 예외가 되는 상황이 존재하지 않으므로 forEach를 이용했고, 굳이 깊은 복사를 통한 처리는 하지 않았다.
 	 */
 	public void runGame() {
-		List<Car> cars = createCarsByNames(this.carNames, DEFAULT_POSITION);
+		List<Car> cars = createCarsByNames(this.config.getCarNames(), DEFAULT_POSITION);
 
 		for (int i = 0; i < tryCount; i++) {
 			cars.forEach(car -> {

@@ -2,6 +2,7 @@ package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
 import racingcar.game.RacingGame;
+import racingcar.game.RacingGameConfig;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,12 +21,13 @@ public class Application {
      * Game은 데이터를 받아서, 게임을 진행하고, 결과를 출력하는 책임을 가지도록 하였다.
      */
     public static void main(String[] args) {
-        System.out.println(FIRST_INPUT_MESSAGE);
+        Display.putMessage(FIRST_INPUT_MESSAGE);
         List<String> carNames = adaptInputAsStringList(Console.readLine());
-        System.out.println(SECOND_INPUT_MESSAGE);
+        Display.putMessage(SECOND_INPUT_MESSAGE);
         int tryCount = adaptInputAsInt(Console.readLine());
 
-        RacingGame racingGame = new RacingGame(carNames, tryCount, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
+        RacingGameConfig racingGameConfig = new RacingGameConfig(carNames, tryCount);
+        RacingGame racingGame = new RacingGame(racingGameConfig, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
         racingGame.runGame();
     }
 
