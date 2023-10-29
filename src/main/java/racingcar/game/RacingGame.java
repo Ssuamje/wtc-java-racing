@@ -1,6 +1,7 @@
 package racingcar.game;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import racingcar.Display;
 import racingcar.Validatable;
 import racingcar.Validator;
 
@@ -14,19 +15,15 @@ public class RacingGame implements Validatable {
 	private static final int DEFAULT_POSITION = 0;
 
 	private final RacingGameConfig config;
-	private final int minNum;
-	private final int thresholdToMove;
-	private final int maxNum;
+	private final RacingGameStrategy strategy;
 
 
 	/**
 	 * 외부에서 주어지는 상수 값 또한 해당 게임에서 사용되는 경계값이므로 생성자에 포함하였다.
 	 */
-	public RacingGame(RacingGameConfig config, int minNum, int thresholdToMove, int maxNum) {
+	public RacingGame(RacingGameConfig config, RacingGameStrategy strategy) {
 		this.config = config;
-		this.minNum = minNum;
-		this.thresholdToMove = thresholdToMove;
-		this.maxNum = maxNum;
+		this.strategy = strategy;
 		Validator.throwIfNotValid(this, ExceptionStatus.INVALID_RACING_GAME);
 	}
 
@@ -49,9 +46,6 @@ public class RacingGame implements Validatable {
 		return "RacingGame{" +
 			"carNames=" + this.config.getCarNames() +
 			", tryCount=" + this.config.getTryCount() +
-			", minNum=" + minNum +
-			", thresholdToMove=" + thresholdToMove +
-			", maxNum=" + maxNum +
 			'}';
 	}
 
@@ -69,18 +63,21 @@ public class RacingGame implements Validatable {
 	 * 예외가 되는 상황이 존재하지 않으므로 forEach를 이용했고, 굳이 깊은 복사를 통한 처리는 하지 않았다.
 	 */
 	public void runGame() {
-		List<Car> cars = createCarsByNames(this.config.getCarNames(), DEFAULT_POSITION);
+		List<String> carNames = this.config.getCarNames();
+		List<Car> cars = createCarsByNames(carNames, DEFAULT_POSITION);
 
+		int tryCount = this.config.getTryCount();
 		for (int i = 0; i < tryCount; i++) {
-			cars.forEach(car -> {
-				int randomNum = Randoms.pickNumberInRange(this.minNum, this.maxNum);
-				if (randomNum >= this.thresholdToMove) {
-					car.move();
-				}
-			});
+			cars.forEach(this::moveByStrategy);
 			printMoveResult(cars);
 		}
 		printWinner(cars);
+	}
+
+	private void moveByStrategy(Car car) {
+		if (strategy.isMoveable()) {
+			car.move();
+		}
 	}
 
 	private List<Car> createCarsByNames(List<String> carNames, int defaultPosition) {
@@ -90,16 +87,16 @@ public class RacingGame implements Validatable {
 	}
 
 	private void printMoveResult(List<Car> cars) {
-		for (Car car : cars) {
-			System.out.println(car.getName() + " : " + "-".repeat(car.getMoveCount()));
-		}
-		System.out.println();
+		cars.forEach(car ->
+				Display.putMessage(car.getName() + " : " + "-".repeat(car.getMoveCount()))
+		);
+		Display.putNewLine();
 	}
 
 	private void printWinner(List<Car> cars) {
 		int maxMoveCount = getMaxMoveCount(cars).orElse(0);
 		List<String> winners = getWinnersByMaxMoveCount(cars, maxMoveCount);
-		System.out.println("최종 우승자 : " + String.join(", ", winners));
+		Display.putMessage("최종 우승자 : " + String.join(", ", winners));
 	}
 
 	private OptionalInt getMaxMoveCount(List<Car> cars) {

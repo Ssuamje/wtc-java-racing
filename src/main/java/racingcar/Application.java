@@ -1,8 +1,11 @@
 package racingcar;
 
 import camp.nextstep.edu.missionutils.Console;
+import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.game.RacingGame;
 import racingcar.game.RacingGameConfig;
+import racingcar.game.RacingGameStrategy;
+import racingcar.game.RacingGameStrategyFactory;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +29,9 @@ public class Application {
         Display.putMessage(SECOND_INPUT_MESSAGE);
         int tryCount = adaptInputAsInt(Console.readLine());
 
-        RacingGameConfig racingGameConfig = new RacingGameConfig(carNames, tryCount);
-        RacingGame racingGame = new RacingGame(racingGameConfig, MIN_NUM, THRESHOLD_TO_MOVE, MAX_NUM);
+        RacingGameConfig config = new RacingGameConfig(carNames, tryCount);
+        RacingGameStrategy strategy = RacingGameStrategyFactory.createRandomsStrategy(MIN_NUM, MAX_NUM, THRESHOLD_TO_MOVE);
+        RacingGame racingGame = new RacingGame(config, strategy);
         racingGame.runGame();
     }
 
