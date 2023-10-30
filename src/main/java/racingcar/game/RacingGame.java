@@ -1,6 +1,5 @@
 package racingcar.game;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import racingcar.Display;
 import racingcar.Validatable;
 import racingcar.Validator;
@@ -44,21 +43,21 @@ public class RacingGame implements Validatable {
 	@Override
 	public String toString() {
 		return "RacingGame{" +
-			"carNames=" + this.config.getCarNames() +
-			", tryCount=" + this.config.getTryCount() +
-			'}';
+				"carNames=" + this.config.getCarNames() +
+				", tryCount=" + this.config.getTryCount() +
+				'}';
 	}
 
 	/**
 	 * Car 객체로 만들어서 오류가 나는지 안 나는지는 해당 게임의 실행 시에 결정된다고 생각했다.
 	 * 따라서 Car 객체를 만드는 부분은 게임을 실행하는 메소드 내부로 넣었다. <- 뺀다면 CarFactory를 이용할 것 같다.
-	 *
+	 * <p>
 	 * 경우에 따라서 내부적으로 this의 변수를 참조하는 부분을 매개변수로 통제할 수 있겠지만,
 	 * 조금 과한 것 같아서 그냥 사용했다.
-	 *
+	 * <p>
 	 * 움직일지 말지에 대한 부분을 별도의 클래스로 작성할 수는 있으나,
 	 * 불필요하다고 생각해서 분리하지 않았다.
-	 *
+	 * <p>
 	 * forEach를 통해 해당 원소들에 side-effect가 발생하지만,
 	 * 예외가 되는 상황이 존재하지 않으므로 forEach를 이용했고, 굳이 깊은 복사를 통한 처리는 하지 않았다.
 	 */
@@ -82,8 +81,8 @@ public class RacingGame implements Validatable {
 
 	private List<Car> createCarsByNames(List<String> carNames, int defaultPosition) {
 		return carNames.stream()
-			.map(name -> new Car(name, defaultPosition))
-			.toList();
+				.map(name -> new Car(name, defaultPosition))
+				.toList();
 	}
 
 	private void printMoveResult(List<Car> cars) {
