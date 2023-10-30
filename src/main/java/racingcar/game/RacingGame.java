@@ -30,8 +30,8 @@ public class RacingGame implements Validatable {
 	@Override
 	public String toString() {
 		return "RacingGame{" +
-				"carNames=" + this.config.getCarNames() +
-				", tryCount=" + this.config.getTryCount() +
+				"config=" + this.config +
+				", strategy=" + this.strategy +
 				'}';
 	}
 
